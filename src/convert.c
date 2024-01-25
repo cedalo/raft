@@ -30,6 +30,9 @@ static void convertSetState(struct raft *r, unsigned short new_state)
            (r->state == RAFT_CANDIDATE && new_state == RAFT_UNAVAILABLE) ||
            (r->state == RAFT_LEADER && new_state == RAFT_UNAVAILABLE));
     r->state = new_state;
+    if (r->state == RAFT_LEADER) {
+        r->leader_state.voter_contacts = 1;
+    }
 }
 
 /* Clear follower state. */
