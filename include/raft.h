@@ -783,9 +783,8 @@ struct raft
             raft_index round_index;         /* Target of the current round. */
             raft_time round_start;          /* Start of current round. */
             void *requests[2];              /* Outstanding client requests. */
-            uint32_t voter_contacts;        /* Current number of voting nodes we are in contact with */
             uint32_t reserved2;             /* Future use */
-            uint64_t reserved[7];           /* Future use */
+            uint64_t reserved[8];           /* Future use */
         } leader_state;
     };
 
@@ -839,8 +838,12 @@ struct raft
      * user-supplied callbacks. */
     uint64_t callbacks;
 
+    /* Current number of voting nodes we are in contact with */
+    uint32_t voter_contacts;
+
     /* Future extensions */
-    uint64_t reserved[31];
+    uint32_t reserved1;
+    uint64_t reserved[30];
 };
 
 RAFT_API int raft_init(struct raft *r,
