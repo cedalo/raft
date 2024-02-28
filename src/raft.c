@@ -84,7 +84,7 @@ int raft_init(struct raft *r,
     r->last_applied = 0;
     r->last_stored = 0;
     r->state = RAFT_UNAVAILABLE;
-    r->leader_state.voter_contacts = 0;
+    r->voter_contacts = 0;
     r->transfer = NULL;
     r->snapshot.pending.term = 0;
     r->snapshot.threshold = DEFAULT_SNAPSHOT_THRESHOLD;
@@ -179,11 +179,7 @@ const char *raft_errmsg(struct raft *r)
 
 int raft_voter_contacts(struct raft *r)
 {
-    if (r->state == RAFT_LEADER) {
-        return (int)r->leader_state.voter_contacts;
-    } else {
-        return -1;
-    }
+	return (int)r->voter_contacts;
 }
 
 int raft_bootstrap(struct raft *r, const struct raft_configuration *conf)
